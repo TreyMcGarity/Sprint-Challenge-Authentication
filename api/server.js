@@ -32,4 +32,10 @@ server.use(session({
 server.use('/api/auth', authRouter);
 server.use('/api/jokes', jokesRouter);
 
+server.get('/', (req, res) => {
+	res.status(200).json({
+		message: "you're here"
+	})
+})
+
 module.exports = server;

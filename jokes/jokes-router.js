@@ -11,6 +11,7 @@ router.get('/', authCookie(), (req, res) => {
   axios
     .get('https://icanhazdadjoke.com/search', requestOptions)
     .then(response => {
+      console.log(response.data);
       res.status(200).json(response.data.results);
     })
     .catch(err => {
