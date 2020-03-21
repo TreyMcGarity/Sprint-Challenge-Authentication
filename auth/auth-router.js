@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs")
 const model = require("./auth-model")
-const auth = require("./authenticate-middleware")
+const { authenticate } = require("./authenticate-middleware")
 
 const router = require('express').Router();
 
@@ -21,7 +21,7 @@ router.post('/register', async (req, res, next) => {
 	}
 });
 
-router.post('/login', auth, async (req, res, next) => {
+router.post('/login', authenticate(), async (req, res, next) => {
   try {
 		const { username, password } = req.body
 		const user = await model.findBy({ username }).first()
@@ -34,7 +34,7 @@ router.post('/login', auth, async (req, res, next) => {
 		}
 
 		req.session.user = user
-
+		console.log("login user->",req.session.user)
 		res.status(201).json({
 			message: `Welcome ${user.username}!`,
 		})
